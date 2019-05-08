@@ -1,0 +1,27 @@
+body{
+	background-color:#212529 !important;
+	color:#ffffff !important;
+}
+
+#content{
+	width:230px;
+}
+
+#newTask{
+	max-width: 150px;
+	max-height:20px;
+	border-color: black;
+	border-width:medium;
+	border-radius: 5px;
+	font-size: 10px;
+}
+
+ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+i.fa-minus-square:before{
+padding-right:5px;
+}

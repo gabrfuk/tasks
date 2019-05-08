@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Tasks",
+  "version": "1.0",
+  "description": "Tasks.",
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "tabs"     
+  ],
+"content_scripts": [
+    {
+      "matches": ["https://exame.abril.com.br/*/*"],
+      "js": ["jquery.js", "main.js"]
+    }
+  ]
+
+}
