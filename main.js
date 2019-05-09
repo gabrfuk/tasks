@@ -1,10 +1,14 @@
 $(document).ready(function(){
-
+	var timerShouldRun = true;
+	//////////////////////////////////////////////////////
+	//Initialization
+	//////////////////////////////////////////////////////
 	chrome.storage.sync.get(function (tasks)
 	{
 		if(tasks.description != undefined)
-		var currentDate = Date.parse(new Date());
 		{
+			var currentDate = Date.parse(new Date());
+			
 			for(var i = 0; i< tasks.description.length; i++){
 				var color = currentDate > tasks.alarmSet[i] ? "text-danger" : "";
 				$("#content ul").append('<li id="'+i+'" class="'+color+
@@ -16,7 +20,9 @@ $(document).ready(function(){
 	});
 	
 	
-
+	//////////////////////////////////////////////////////
+	//Adding a new task
+	//////////////////////////////////////////////////////
 	$("#add").click(function()
 	{
 		
@@ -55,6 +61,9 @@ $(document).ready(function(){
 		
 	});
 	
+	//////////////////////////////////////////////////////
+	//Deleting a task
+	//////////////////////////////////////////////////////
 	$(document).on('click','.del',function(){
 		var id = $(this).prop("id");
 		
@@ -77,21 +86,31 @@ $(document).ready(function(){
 
 	});
 	
+	//test
 	$(".fa-tasks").click(function(){
 		render();
 		
 	});
 	
+	//////////////////////////////////////////////////////
+	//Clear list
+	//////////////////////////////////////////////////////
 	$(".clear").click(function(){
 		$("li").remove();
 		chrome.storage.sync.clear();
 	});
 	
+	//////////////////////////////////////////////////////
+	//Enter functionality
+	//////////////////////////////////////////////////////
 	$("#newTask").keydown(function(e){
 		if(event.which == 13)
 			$("#add").click();
 	});
 
+	//////////////////////////////////////////////////////
+	//Alarm time assignation
+	//////////////////////////////////////////////////////
 	$(".badge").click(function(){
 		$(".badge").removeClass("badge-light");
 		$(".badge").addClass("badge-dark");
@@ -100,21 +119,45 @@ $(document).ready(function(){
 		$(this).addClass("badge-light");
 	});
 
+	//test
 	function render(){
-	chrome.storage.sync.get(function (tasks)
-	{
-		if(tasks.description != undefined)
-		var currentDate = Date.parse(new Date());
+		chrome.storage.sync.get(function (tasks)
 		{
-			for(var i = 0; i< tasks.description.length; i++){
-				var color = currentDate > tasks.alarmSet[i] ? "text-danger" : "";
-				$("#content ul").append('<li id="'+i+'" class="'+color+
-										'" data-time="'+ tasks.alarmTime[i] +
-										'" data-reminder="'+ tasks.alarmSet[i] +
-										'"><i class="far fa-minus-square del " id="'+i+'"></i>' + tasks.description[i] + ' - ' +currentDate + ' - ' + tasks.alarmSet[i] + '</li>');
-			}
-		}		
-	});	
+			if(tasks.description != undefined)
+			var currentDate = Date.parse(new Date());
+			{
+				for(var i = 0; i< tasks.description.length; i++){
+					var color = currentDate > tasks.alarmSet[i] ? "text-danger" : "";
+					$("#content ul").append('<li id="'+i+'" class="'+color+
+											'" data-time="'+ tasks.alarmTime[i] +
+											'" data-reminder="'+ tasks.alarmSet[i] +
+											'"><i class="far fa-minus-square del " id="'+i+'"></i>' + tasks.description[i] + ' - ' +currentDate + ' - ' + tasks.alarmSet[i] + '</li>');
+				}
+			}		
+		});	
 	}
+	
+	//alarm
+	/* setInterval(function(){
+		if(timerShouldRun)
+		{
+			chrome.storage.sync.get(function (tasks)
+			{
+				if(tasks.description != undefined)
+				{
+					var currentDate = Date.parse(new Date());
+					for(var i = 0; i< tasks.description.length; i++)
+					{
+						if(currentDate > tasks.alarmSet[i])
+						{
+							alert("Tasks","Task time is over!");
+							timerShouldRun = false;
+							break;
+						}
+					}
+				}
+			});
+		}
+	}, 2000); */
 
 });
