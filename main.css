@@ -23,5 +23,9 @@ ul{
 }
 
 i.fa-minus-square:before{
-padding-right:5px;
+	padding-right:5px;
+}
+
+.badge{
+	cursor:pointer;
 }
