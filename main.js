@@ -14,7 +14,7 @@ $(document).ready(function(){
 				$("#content ul").append('<li id="'+i+'" class="'+color+
 										'" data-time="'+ tasks.alarmTime[i] +
 										'" data-reminder="'+ tasks.alarmSet[i] +
-										'"><i class="far fa-minus-square del " id="'+i+'"></i>' + tasks.description[i] + ' - ' +currentDate + ' - ' + tasks.alarmSet[i] + '</li>');
+										'"><i class="far fa-minus-square del " id="'+i+'"></i>' + tasks.description[i] + '</li>');
 			}
 		}		
 	});

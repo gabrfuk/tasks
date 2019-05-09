@@ -1,6 +1,8 @@
 body{
+	padding : 10px;
 	background-color:#212529 !important;
 	color:#ffffff !important;
+	border-radius:5px;
 }
 
 #content{
@@ -28,4 +30,8 @@ i.fa-minus-square:before{
 
 .badge{
 	cursor:pointer;
+}
+
+li{
+	font-size: 12px;
 }
