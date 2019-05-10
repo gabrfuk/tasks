@@ -10,7 +10,7 @@ $(document).ready(function(){
 			var currentDate = Date.parse(new Date());
 			
 			for(var i = 0; i< tasks.description.length; i++){
-				var color = currentDate > tasks.alarmSet[i] ? "text-danger" : "";
+				var color = (currentDate > tasks.alarmSet[i]) && tasks.alarmTime[i] != 0 ? "text-danger" : "";
 				$("#content ul").append('<li id="'+i+'" class="'+color+
 										'" data-time="'+ tasks.alarmTime[i] +
 										'" data-reminder="'+ tasks.alarmSet[i] +
@@ -25,29 +25,22 @@ $(document).ready(function(){
 	//////////////////////////////////////////////////////
 	$("#add").click(function()
 	{
-		
-		chrome.storage.sync.get(function (tasks)
+		if($("#newTask").val() != "")
 		{
-			var nextKey;
-			if(tasks.description == undefined)
-			{
-				nextKey = 0;
-				tasks = {'description':[],'alarmTime':[],'alarmSet':[]};
-			}
-			else
-			{
-				nextKey = tasks.description.length;
-			}
-			
-			
-			
-			tasks.description.push($("#newTask").val());
-			tasks.alarmTime.push($(".badge-light").text());
 			var dt  = new Date();
-			tasks.alarmSet.push(dt.getTime() + tasks.alarmTime[nextKey]*60000);
 			
-			if(tasks.description[nextKey] != undefined || tasks.description[nextKey] != "")
+			chrome.storage.sync.get(function (tasks)
 			{
+				var nextKey = 0;
+				if(tasks.description == undefined)
+					tasks = {'description':[],'alarmTime':[],'alarmSet':[]};
+				else
+					nextKey = tasks.description.length;
+				
+				tasks.description.push($("#newTask").val());
+				tasks.alarmTime.push($(".badge-light").text());
+				tasks.alarmSet.push(dt.getTime() + tasks.alarmTime[nextKey]*60000);
+
 				$("#content ul").append('<li id="'+nextKey+
 											'"data-time="'+ tasks.alarmTime[nextKey] +
 											'" data-reminder="'+ tasks.alarmSet[nextKey] +
@@ -55,10 +48,9 @@ $(document).ready(function(){
 										'</li> ');
 				chrome.storage.sync.set(tasks,null);
 				$("#newTask").val("");
-			}
-	
-		});
-		
+				
+			});
+		}
 	});
 	
 	//////////////////////////////////////////////////////
@@ -87,10 +79,10 @@ $(document).ready(function(){
 	});
 	
 	//test
-	$(".fa-tasks").click(function(){
-		render();
-		
-	});
+	//$(".fa-tasks").click(function(){
+	//	render();
+	//	
+	//});
 	
 	//////////////////////////////////////////////////////
 	//Clear list

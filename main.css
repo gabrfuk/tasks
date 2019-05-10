@@ -1,8 +1,30 @@
 body{
-	padding : 10px;
+	background-color:#ffffff;
+	
+}
+
+.topboard{
+	height:20px;
+	width:33%;
+	background-color: #009FEE;
+	top:10px;
+	left:33%;
+	z-index:10;
+	position:absolute;
+	border-radius:5px;
+}
+
+.board{
+	margin : 15px 10px 5px 10px;
 	background-color:#212529 !important;
 	color:#ffffff !important;
-	border-radius:5px;
+	border-radius:10px;
+	padding-top:20px;
+	padding-bottom:10px;
+}
+
+.tasks-container{
+	min-height:150px;
 }
 
 #content{

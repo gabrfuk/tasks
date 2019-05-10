@@ -2,22 +2,17 @@
 	"manifest_version": 2,
 	"name": "Tasks",
 	"version": "1.0",
-	"description": "Keep track of your tasks without move off Chrome.",
+	"description": "Keep track of your tasks without moving off Chrome.",
+	"icons":{
+		"32":"task-32.png",
+		"128":"task-128.png"
+	},
 	"browser_action": {
 		"default_popup": "index.html"
 	},
 	"permissions": [
 		"storage"
-	],
-	"content_scripts": [
-		{
-		  "matches": ["https://*/*/*"],
-		  "js": ["jquery.js", "main.js"]
-		}
-	],
-	"background":{
-		"scripts": ["background.js"],
-		"persistent": false
-	}
+	]
+	
 
 }
