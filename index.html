@@ -15,13 +15,12 @@
 	<div class="board">
 		<div class="container tasks-container">
 			<div class="row align-items-center">
-				<div class="col-1"><i class="fas fa-tasks "></i></div>
-				<div class="col-7" style="margin-left:0;">
+				<div class="col-1">
+					<i class="fas fa-tasks "></i>
+				</div>
+				<div class="col-8" style="margin-left:0;">
 					<h5>Tasks</h5>
 				</div>
-				<div class=col-1>
-						<i class="clear far fa-check-square " data-toggle="tooltip" data-placement="Bottom" title="Done"></i>
-					</div>
 			</div>
 			<br />
 			<div id="content">
@@ -31,30 +30,25 @@
 			</div>
 		</div>
 		<div class="container">
-			<div class="row align-items-center">
-				<div class=col-8>
-					<input type="text" id="newTask" class="form-control form-control-sm"/>
-				</div>
-				<div class=col-1>
-					<i id="add" class="far fa-plus-square " data-toggle="tooltip" data-placement="Top" title="Add" ></i>
-				</div>
+			<div class="d-flex justify-content-center ">
+					<input type="text" id="newTask" class="form-control form-control-sm d-inline "/>
+					<span class="icon align-middle"><i class="fas fa-exclamation-circle d-inline px-2" title="Urgent" id="urgent" ></i></span>
+					<span class="icon align-middle"><i class="far fa-trash-alt clear" title="Clear"></i></span>
 			</div>
-			<div class="row align-items-center">
-				<div class=col-1>
-					<i class="far fa-clock" data-toggle="tooltip" data-placement="Top" title="Alarm"></i>
+			<div class="d-flex justify-content-center">
+				<div class="p-2 icon">
+					<span class="badge badge-pill badge-light"><i class="fas fa-bell-slash"></i></span>
 				</div>
-				<div class=col-1>
-					<span class="badge badge-pill badge-dark">0</span>
+				<div class="p-2 icon" >
+					<span class="badge badge-pill badge-dark">15</span>
 				</div>
-				<div class=col-1>
-					<span class="badge badge-pill badge-light">10</span>
-				</div>
-				<div class=col-1>
-					<span class="badge badge-pill badge-dark">20</span>
-				</div>
-				<div class=col-1>
+				<div class="p-2 icon">
 					<span class="badge badge-pill badge-dark">30</span>
 				</div>
+				<div class="p-2 icon">
+					<span class="badge badge-pill badge-dark">60</span>
+				</div>
+				
 			</div>
 		</div>
 	</div>

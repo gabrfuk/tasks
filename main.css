@@ -16,7 +16,7 @@ body{
 
 .board{
 	margin : 15px 10px 5px 10px;
-	background-color:#212529 !important;
+	background-color:#333333 !important;
 	color:#ffffff !important;
 	border-radius:10px;
 	padding-top:20px;
@@ -28,16 +28,16 @@ body{
 }
 
 #content{
-	width:230px;
+	width:180px;
 }
 
 #newTask{
-	max-width: 150px;
-	max-height:20px;
-	border-color: black;
+	max-width: 130px;
+	max-height:30px;
+	border-color: #333333;
 	border-width:medium;
 	border-radius: 5px;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 ul{
@@ -50,10 +50,14 @@ i.fa-minus-square:before{
 	padding-right:5px;
 }
 
-.badge{
+.icon,.fa-plus-square,.fa-trash-alt{
 	cursor:pointer;
 }
 
 li{
-	font-size: 12px;
+	font-size: 13px;
+}
+
+.urgent{
+	color: #ffc107
 }

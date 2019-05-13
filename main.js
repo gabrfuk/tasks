@@ -10,11 +10,15 @@ $(document).ready(function(){
 			var currentDate = Date.parse(new Date());
 			
 			for(var i = 0; i< tasks.description.length; i++){
+				
 				var color = (currentDate > tasks.alarmSet[i]) && tasks.alarmTime[i] != 0 ? "text-danger" : "";
+				var urgent = tasks.urgent[i] ? "fas fa-exclamation-circle urgent" : "fas fa-minus-circle";
+				
 				$("#content ul").append('<li id="'+i+'" class="'+color+
 										'" data-time="'+ tasks.alarmTime[i] +
 										'" data-reminder="'+ tasks.alarmSet[i] +
-										'"><i class="far fa-minus-square del " id="'+i+'"></i>' + tasks.description[i] + '</li>');
+										'" data-urgent="' + tasks.urgent[i] +
+										'"><i class="' + urgent + ' icon del p-2" id="'+i+'"></i>' + tasks.description[i] + '</li>');
 			}
 		}		
 	});
@@ -23,7 +27,7 @@ $(document).ready(function(){
 	//////////////////////////////////////////////////////
 	//Adding a new task
 	//////////////////////////////////////////////////////
-	$("#add").click(function()
+	function addTask()
 	{
 		if($("#newTask").val() != "")
 		{
@@ -33,25 +37,30 @@ $(document).ready(function(){
 			{
 				var nextKey = 0;
 				if(tasks.description == undefined)
-					tasks = {'description':[],'alarmTime':[],'alarmSet':[]};
+					tasks = {'description':[],'alarmTime':[],'alarmSet':[],'urgent':[]};
 				else
 					nextKey = tasks.description.length;
 				
 				tasks.description.push($("#newTask").val());
 				tasks.alarmTime.push($(".badge-light").text());
 				tasks.alarmSet.push(dt.getTime() + tasks.alarmTime[nextKey]*60000);
+				tasks.urgent.push($("#urgent").hasClass("urgent"));
+
+				var urgent = tasks.urgent[nextKey] ? "fas fa-exclamation-circle urgent" : "fas fa-minus-circle";
 
 				$("#content ul").append('<li id="'+nextKey+
 											'"data-time="'+ tasks.alarmTime[nextKey] +
 											'" data-reminder="'+ tasks.alarmSet[nextKey] +
-											'"><i class="far fa-minus-square del" id="'+nextKey+'"></i>' + tasks.description[nextKey] + 
+											'" data-urgent="' + tasks.urgent[nextKey] +
+											'"><i class="' + urgent + ' icon del p-2" id="'+nextKey+'"></i>' + tasks.description[nextKey] + 
 										'</li> ');
 				chrome.storage.sync.set(tasks,null);
 				$("#newTask").val("");
+				$("#urgent").removeClass("urgent");
 				
 			});
 		}
-	});
+	};
 	
 	//////////////////////////////////////////////////////
 	//Deleting a task
@@ -64,7 +73,7 @@ $(document).ready(function(){
 			tasks.description.splice(id,1);
 			tasks.alarmTime.splice(id,1);
 			tasks.alarmSet.splice(id,1);
-			
+			tasks.urgent.splice(id,1)
 			chrome.storage.sync.set(tasks,null);
 			
 			$("li").each(function(index){
@@ -95,9 +104,12 @@ $(document).ready(function(){
 	//////////////////////////////////////////////////////
 	//Enter functionality
 	//////////////////////////////////////////////////////
-	$("#newTask").keydown(function(e){
+	$(document).keydown(function(e){
 		if(event.which == 13)
-			$("#add").click();
+			addTask();
+		else if(event.which == 9)
+			$("#urgent").click();
+		$(this).focus();
 	});
 
 	//////////////////////////////////////////////////////
@@ -111,45 +123,13 @@ $(document).ready(function(){
 		$(this).addClass("badge-light");
 	});
 
-	//test
-	function render(){
-		chrome.storage.sync.get(function (tasks)
-		{
-			if(tasks.description != undefined)
-			var currentDate = Date.parse(new Date());
-			{
-				for(var i = 0; i< tasks.description.length; i++){
-					var color = currentDate > tasks.alarmSet[i] ? "text-danger" : "";
-					$("#content ul").append('<li id="'+i+'" class="'+color+
-											'" data-time="'+ tasks.alarmTime[i] +
-											'" data-reminder="'+ tasks.alarmSet[i] +
-											'"><i class="far fa-minus-square del " id="'+i+'"></i>' + tasks.description[i] + ' - ' +currentDate + ' - ' + tasks.alarmSet[i] + '</li>');
-				}
-			}		
-		});	
-	}
+	//urgent mark
+	$("#urgent").click(function(){
+		if($(this).hasClass("urgent"))
+			$(this).removeClass("urgent");
+		else
+			$(this).addClass("urgent");
+	});
 	
-	//alarm
-	/* setInterval(function(){
-		if(timerShouldRun)
-		{
-			chrome.storage.sync.get(function (tasks)
-			{
-				if(tasks.description != undefined)
-				{
-					var currentDate = Date.parse(new Date());
-					for(var i = 0; i< tasks.description.length; i++)
-					{
-						if(currentDate > tasks.alarmSet[i])
-						{
-							alert("Tasks","Task time is over!");
-							timerShouldRun = false;
-							break;
-						}
-					}
-				}
-			});
-		}
-	}, 2000); */
 
 });
