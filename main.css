@@ -61,3 +61,17 @@ li{
 .urgent{
 	color: #ffc107
 }
+
+#timeCustom{
+	border-radius:10rem;
+	z-index:1;
+	width:30px;
+	height:20px;
+	background-color:#343a40;
+	border-color: #343a40;
+	color:#ffffff;	
+	font-size:75%;
+	font-weight: 700;
+    line-height: 1;
+    text-align: center;
+}

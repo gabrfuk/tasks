@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	var timerShouldRun = true;
+	//var timerShouldRun = true;
+	$("#newTask").focus();
+	
 	//////////////////////////////////////////////////////
 	//Initialization
 	//////////////////////////////////////////////////////
@@ -22,44 +24,44 @@ $(document).ready(function(){
 			}
 		}		
 	});
-	
+
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	});
 	
 	//////////////////////////////////////////////////////
 	//Adding a new task
 	//////////////////////////////////////////////////////
 	function addTask()
 	{
-		if($("#newTask").val() != "")
+		var dt  = new Date();
+		
+		chrome.storage.sync.get(function (tasks)
 		{
-			var dt  = new Date();
+			var nextKey = 0;
+			if(tasks.description == undefined)
+				tasks = {'description':[],'alarmTime':[],'alarmSet':[],'urgent':[]};
+			else
+				nextKey = tasks.description.length;
 			
-			chrome.storage.sync.get(function (tasks)
-			{
-				var nextKey = 0;
-				if(tasks.description == undefined)
-					tasks = {'description':[],'alarmTime':[],'alarmSet':[],'urgent':[]};
-				else
-					nextKey = tasks.description.length;
-				
-				tasks.description.push($("#newTask").val());
-				tasks.alarmTime.push($(".badge-light").text());
-				tasks.alarmSet.push(dt.getTime() + tasks.alarmTime[nextKey]*60000);
-				tasks.urgent.push($("#urgent").hasClass("urgent"));
+			tasks.description.push($("#newTask").val());
+			tasks.alarmTime.push($(".selected").text());
+			tasks.alarmSet.push(dt.getTime() + tasks.alarmTime[nextKey]*60000);
+			tasks.urgent.push($("#urgent").hasClass("urgent"));
 
-				var urgent = tasks.urgent[nextKey] ? "fas fa-exclamation-circle urgent" : "fas fa-minus-circle";
+			var urgent = tasks.urgent[nextKey] ? "fas fa-exclamation-circle urgent" : "fas fa-minus-circle";
 
-				$("#content ul").append('<li id="'+nextKey+
-											'"data-time="'+ tasks.alarmTime[nextKey] +
-											'" data-reminder="'+ tasks.alarmSet[nextKey] +
-											'" data-urgent="' + tasks.urgent[nextKey] +
-											'"><i class="' + urgent + ' icon del p-2" id="'+nextKey+'"></i>' + tasks.description[nextKey] + 
-										'</li> ');
-				chrome.storage.sync.set(tasks,null);
-				$("#newTask").val("");
-				$("#urgent").removeClass("urgent");
-				
-			});
-		}
+			$("#content ul").append('<li id="'+nextKey+
+										'"data-time="'+ tasks.alarmTime[nextKey] +
+										'" data-reminder="'+ tasks.alarmSet[nextKey] +
+										'" data-urgent="' + tasks.urgent[nextKey] +
+										'"><i class="' + urgent + ' icon del p-2" id="'+nextKey+'"></i>' + tasks.description[nextKey] + 
+									'</li> ');
+			chrome.storage.sync.set(tasks,null);
+			$("#newTask").val("");
+			$("#urgent").removeClass("urgent");
+		});
+		$("#newTask").focus();
 	};
 	
 	//////////////////////////////////////////////////////
@@ -106,21 +108,38 @@ $(document).ready(function(){
 	//////////////////////////////////////////////////////
 	$(document).keydown(function(e){
 		if(event.which == 13)
-			addTask();
-		else if(event.which == 9)
-			$("#urgent").click();
-		$(this).focus();
+			if(!Number.isInteger($("#timeCustom").val()))
+				$("#timeCustom").focus();
+			else if($("#newTask").val() != "")
+				addTask();
 	});
 
 	//////////////////////////////////////////////////////
 	//Alarm time assignation
 	//////////////////////////////////////////////////////
-	$(".badge").click(function(){
+	$(".alarm-time").click(function(){
+		
+		$(".selected").removeClass("selected");
 		$(".badge").removeClass("badge-light");
 		$(".badge").addClass("badge-dark");
-		
-		$(this).removeClass("badge-dark");
-		$(this).addClass("badge-light");
+			
+		if($(this).hasClass("badge"))
+		{
+			$("#timeCustom").css({"background-color":"#343a40","border-color": "#343a40","color":"#ffffff"});
+			$(this).removeClass("badge-dark");
+			$(this).addClass("badge-light selected");
+			
+		}
+		else if($(this).attr("id") == "timeCustom")
+		{
+			$(this).select();
+			$("#timeCustomSpan").addClass("selected");
+			$(this).css({"background-color":"#ffffff","border-color": "#ffffff","color":"#343a40"});
+		}
+	});
+	
+	$("#timeCustom").blur(function(){
+		$("#timeCustomSpan").text($(this).val());
 	});
 
 	//urgent mark

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <script src="jquery.js"></script>
+<script src="bootstrap.bundle.min.js"></script>
+<script src="popper.min.js"></script>
 <script src="main.js"></script>
 <link rel="stylesheet" type="text/css" href="main.css">
 <link rel="stylesheet" href="bootstrap.min.css" type="text/css" >
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 <head>
-    <title>Hello World</title>
+    <title>Tasks</title>
 </head>
 <body>
 	<div class="container">
@@ -31,22 +34,23 @@
 		</div>
 		<div class="container">
 			<div class="d-flex justify-content-center ">
-					<input type="text" id="newTask" class="form-control form-control-sm d-inline "/>
-					<span class="icon align-middle"><i class="fas fa-exclamation-circle d-inline px-2" title="Urgent" id="urgent" ></i></span>
-					<span class="icon align-middle"><i class="far fa-trash-alt clear" title="Clear"></i></span>
+					<input type="text" id="newTask" tabindex="0" class="form-control form-control-sm d-inline "/>
+					<span class="icon align-middle"><i class="fas fa-exclamation-circle d-inline px-2" data-toggle="tooltip" data-placement="top" title="Flag as urgent" id="urgent" ></i></span>
+					<span class="icon align-middle"><i class="far fa-trash-alt clear" data-toggle="tooltip" data-placement="top" title="Clear"></i></span>
 			</div>
 			<div class="d-flex justify-content-center">
 				<div class="p-2 icon">
-					<span class="badge badge-pill badge-light"><i class="fas fa-bell-slash"></i></span>
+					<span class="badge badge-pill badge-light alarm-time selected"><i class="fas fa-bell-slash"></i></span>
 				</div>
 				<div class="p-2 icon" >
-					<span class="badge badge-pill badge-dark">15</span>
+					<span class="badge badge-pill badge-dark alarm-time">15</span>
 				</div>
 				<div class="p-2 icon">
-					<span class="badge badge-pill badge-dark">30</span>
+					<span class="badge badge-pill badge-dark alarm-time">30</span>
 				</div>
 				<div class="p-2 icon">
-					<span class="badge badge-pill badge-dark">60</span>
+					<span id="timeCustomSpan" class="d-none">60</span>
+					<input type="text" tabindex="1" id="timeCustom" class="alarm-time border-0" value="XX"></input>
 				</div>
 				
 			</div>
