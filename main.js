@@ -108,7 +108,7 @@ $(document).ready(function(){
 	//////////////////////////////////////////////////////
 	$(document).keydown(function(e){
 		if(event.which == 13)
-			if(!Number.isInteger($("#timeCustom").val()))
+			if($("#timeCustomSpan").hasClass('selected') && isNaN($("#timeCustom").val()))
 				$("#timeCustom").focus();
 			else if($("#newTask").val() != "")
 				addTask();
